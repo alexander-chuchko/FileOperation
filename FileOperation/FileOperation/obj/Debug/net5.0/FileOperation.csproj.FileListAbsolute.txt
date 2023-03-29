@@ -34,3 +34,10 @@ E:\Library\Стажировка\Test Lviv Renabit\TestTask\FileOperation\FileOpe
 E:\Library\Стажировка\Test Lviv Renabit\TestTask\FileOperation\FileOperation\FileOperation\bin\Debug\net5.0\System.IO.Hashing.dll
 E:\Library\Стажировка\Test Lviv Renabit\TestTask\FileOperation\FileOperation\FileOperation\bin\Debug\net5.0\System.Memory.Data.dll
 E:\Library\Стажировка\Test Lviv Renabit\TestTask\FileOperation\FileOperation\FileOperation\bin\Debug\net5.0\Microsoft.WindowsAzure.Storage.dll
+E:\Library\Стажировка\Test Lviv Renabit\TestTask\FileOperation\FileOperation\FileOperation\bin\Debug\net5.0\ClientApp\angular.json
+E:\Library\Стажировка\Test Lviv Renabit\TestTask\FileOperation\FileOperation\FileOperation\bin\Debug\net5.0\ClientApp\package-lock.json
+E:\Library\Стажировка\Test Lviv Renabit\TestTask\FileOperation\FileOperation\FileOperation\bin\Debug\net5.0\ClientApp\package.json
+E:\Library\Стажировка\Test Lviv Renabit\TestTask\FileOperation\FileOperation\FileOperation\bin\Debug\net5.0\ClientApp\tsconfig.app.json
+E:\Library\Стажировка\Test Lviv Renabit\TestTask\FileOperation\FileOperation\FileOperation\bin\Debug\net5.0\ClientApp\tsconfig.json
+E:\Library\Стажировка\Test Lviv Renabit\TestTask\FileOperation\FileOperation\FileOperation\bin\Debug\net5.0\ClientApp\tsconfig.spec.json
+E:\Library\Стажировка\Test Lviv Renabit\TestTask\FileOperation\FileOperation\FileOperation\bin\Debug\net5.0\Microsoft.AspNetCore.SpaServices.Extensions.dll
