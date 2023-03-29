@@ -32,11 +32,12 @@ namespace FileOperation
             
             services.AddSingleton(x => new BlobServiceClient(Configuration.GetValue<string>("")));
 
-
+            services.AddCors();
+            /*
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FileOperation", Version = "v1" });
-            });
+            });*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,8 +46,9 @@ namespace FileOperation
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FileOperation v1"));
+                
+                //app.UseSwagger();
+                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FileOperation v1"));
             }
 
             app.UseHttpsRedirection();
@@ -54,7 +56,9 @@ namespace FileOperation
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseDefaultFiles(); // <-- Это
+            app.UseStaticFiles(); // <-- Вот это
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200/"));
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
