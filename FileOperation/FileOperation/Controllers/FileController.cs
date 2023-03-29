@@ -1,5 +1,6 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using FileOperation.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -45,6 +46,19 @@ namespace FileOperation.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("createfile")]
+        public async Task<IActionResult> CreateFile([FromForm] DataUser dataUser)
+        {
+            if (ModelState.IsValid)
+            {
+                var tempProfile = dataUser;
+                return Ok();
+            }
+
+            return BadRequest();
         }
     }
 }
