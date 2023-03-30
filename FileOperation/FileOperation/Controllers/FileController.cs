@@ -7,22 +7,27 @@ using System.Threading.Tasks;
 
 namespace FileOperation.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
+    //[ApiController]
+
     [ApiController]
+    [Route("api/files")]
+    //[Route("[controller]")]
     public class FileController : ControllerBase
     {
-        private readonly BlobServiceClient _blobServiceClient;
-        public FileController(BlobServiceClient blobServiceClient)
+        //private readonly BlobServiceClient _blobServiceClient;
+        //public FileController(BlobServiceClient blobServiceClient)
+        public FileController()
         {
-            _blobServiceClient = blobServiceClient; 
+            //_blobServiceClient = blobServiceClient; 
         }
-
+        
         [HttpPost]
         public async Task<ActionResult> Create()
         {
-            var containerClient = _blobServiceClient.GetBlobContainerClient("container1");
+            //var containerClient = _blobServiceClient.GetBlobContainerClient("container1");
              
-            var blobClient = containerClient.GetBlobClient("FileName");
+            //var blobClient = containerClient.GetBlobClient("FileName");
             //await blobClient.UploadAsync();
             return Ok();
         }
@@ -47,8 +52,8 @@ namespace FileOperation.Controllers
 
             return Ok();
         }
-
-        [HttpPost]
+        
+        [HttpPost, DisableRequestSizeLimit]
         [Route("createfile")]
         public async Task<IActionResult> CreateFile([FromForm] DataUser dataUser)
         {

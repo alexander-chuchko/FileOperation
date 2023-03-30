@@ -1,6 +1,7 @@
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse, HttpHeaders } from '@angular/common/http'
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -35,7 +36,8 @@ export class FileUploadComponent implements OnInit {
       const value = this.profileForm.value[key];
       formData.append(key, value);
     }
-    this.http.post(this.baseUrl + 'FileManagement/createprofile', formData, {
+    //this.http.post(environment.apiUrl + 'api/files', formData, {
+      this.http.post('https://localhost:5001/api/files/createfile', formData, {
       reportProgress: true,
       observe: 'events'
     }).subscribe((event:any) => {
@@ -73,7 +75,8 @@ export class FileUploadComponent implements OnInit {
       formData.append(file.name, file);
     }
 
-    const uploadReq = new HttpRequest('POST', this.baseUrl + 'FileManagement/upload', formData, {
+    //const uploadReq = new HttpRequest('POST', environment.apiUrl + 'api/files', formData, {
+      const uploadReq = new HttpRequest('POST', 'https://localhost:5001/api/files/createfile', formData, {
       reportProgress: true,
     });
 

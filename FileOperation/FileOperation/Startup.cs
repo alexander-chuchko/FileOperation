@@ -11,7 +11,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace FileOperation
@@ -25,21 +27,14 @@ namespace FileOperation
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            //services.AddControllers();
             services.AddControllersWithViews();
-
-            //services.AddCors();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-
-            services.AddSingleton(x => new BlobServiceClient(Configuration.GetValue<string>("")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,9 +43,6 @@ namespace FileOperation
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
-                //app.UseSwagger();
-                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FileOperation v1"));
             }
             else
             {
@@ -67,16 +59,14 @@ namespace FileOperation
             }
 
 
+
             app.UseRouting();
 
-            //app.UseAuthorization();
-            //app.UseDefaultFiles(); // <-- Это
-            // // <-- Вот это
-            //app.UseCors(builder => builder.WithOrigins("http://localhost:4200/"));
-            
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>
