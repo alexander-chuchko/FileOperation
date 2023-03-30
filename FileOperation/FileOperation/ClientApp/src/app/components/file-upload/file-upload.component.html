@@ -32,7 +32,15 @@
                 <div *ngIf="profileForm.controls['picture'].hasError('required')">Picture is required.</div>
                 </div>
             </div>
-
+            <div class="form-group">
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar"
+                  [ngStyle]="{ 'width': uploadProgress + '%' }"
+                  [attr.aria-valuenow]="uploadProgress" aria-valuemin="0" aria-valuemax="100">
+                {{ uploadProgress }}%
+                </div>
+              </div>
+              </div>
             <input type="submit" value="Submit" [disabled]="profileForm.invalid" class="btn btn-primary" />
         </form>
 </div>

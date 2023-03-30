@@ -1,22 +1,25 @@
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
-import { HttpClientModule }   from '@angular/common/http';
-import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
-    AppComponent, 
+    AppComponent,
     FileUploadComponent
+
   ],
   imports: [
-    BrowserModule,
-    HttpClientModule, 
-    FormsModule,     
-    ReactiveFormsModule,     
-    CommonModule,
+    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forRoot([
+      { path: '', component: FileUploadComponent, pathMatch: 'full' },
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,6 @@
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse, HttpHeaders } from '@angular/common/http'
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -10,19 +9,20 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./file-upload.component.scss']
 })
 
-export class FileUploadComponent implements OnInit {
+export class FileUploadComponent {
+  uploadProgress: number = 0 
   baseUrl: string | undefined;
-  progress: number | undefined;
+  //progress: number | undefined;
   profileForm: FormGroup;
-  @ViewChild('labelImport', { static: true })  labelImport: ElementRef | undefined;
+  @ViewChild('labelImport', { static: true }) labelImport: ElementRef | undefined;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) { 
+    this.baseUrl = baseUrl;
     this.profileForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(2)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       picture: new FormControl('', [Validators.required])
     })
-
   }
 
   get form() {
@@ -36,21 +36,23 @@ export class FileUploadComponent implements OnInit {
       const value = this.profileForm.value[key];
       formData.append(key, value);
     }
-    //this.http.post(environment.apiUrl + 'api/files', formData, {
-      this.http.post('https://localhost:5001/api/files/createfile', formData, {
+
+      this.http.post(this.baseUrl + 'api/files/createfile', formData, {
       reportProgress: true,
       observe: 'events'
     }).subscribe((event:any) => {
       if (event.type === HttpEventType.UploadProgress) {
-        this.progress = Math.round((100 * event.loaded) / event.total);
+        this.uploadProgress = Math.round((100 * event.loaded) / event.total);
       }
       if (event.type === HttpEventType.Response) {
         console.log(event.body);
-        this.profileForm.reset();
+        setTimeout(() => {
+          this.uploadProgress = 0;
+          this.profileForm.reset();       
+        }, 3000);
       }
     });
   }
-
 
   onFileChanged(event:any) {
     if (event.target.files.length > 0) {
@@ -64,9 +66,9 @@ export class FileUploadComponent implements OnInit {
       });
     }
   }
-
+/*
   upload(files:any) {
-    if (files?.length === 0)
+    if (files.length === 0)
       return;
 
     const formData = new FormData();
@@ -75,8 +77,7 @@ export class FileUploadComponent implements OnInit {
       formData.append(file.name, file);
     }
 
-    //const uploadReq = new HttpRequest('POST', environment.apiUrl + 'api/files', formData, {
-      const uploadReq = new HttpRequest('POST', 'https://localhost:5001/api/files/createfile', formData, {
+      const uploadReq = new HttpRequest('POST', this.baseUrl + 'api/files/createfile', formData, {
       reportProgress: true,
     });
 
@@ -85,12 +86,10 @@ export class FileUploadComponent implements OnInit {
         this.progress = Math.round(100 * event.loaded / event.total);
       };
     });
-  }
+  }*/
 
-  
-
-
+  /*
   ngOnInit(): void {
-  }
+  }*/
 
 }
