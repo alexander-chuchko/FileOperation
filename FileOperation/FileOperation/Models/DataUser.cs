@@ -12,5 +12,6 @@ namespace FileOperation.Models
         public string Email { get; set; }
         [Required]
         public IFormFile Picture { get; set; }
+
     }
 }

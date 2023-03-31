@@ -3,16 +3,16 @@ using Azure.Storage.Blobs.Models;
 using FileOperation.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 namespace FileOperation.Controllers
 {
-    //[Route("api/[controller]")]
-    //[ApiController]
-
     [ApiController]
     [Route("api/files")]
-    //[Route("[controller]")]
     public class FileController : ControllerBase
     {
         //private readonly BlobServiceClient _blobServiceClient;
@@ -21,45 +21,34 @@ namespace FileOperation.Controllers
         {
             //_blobServiceClient = blobServiceClient; 
         }
-        
-        [HttpPost]
-        public async Task<ActionResult> Create()
-        {
-            //var containerClient = _blobServiceClient.GetBlobContainerClient("container1");
-             
-            //var blobClient = containerClient.GetBlobClient("FileName");
-            //await blobClient.UploadAsync();
-            return Ok();
-        }
+      
 
-        [HttpPost, DisableRequestSizeLimit]
-        [Route("upload")]
-        public async Task<IActionResult> AddAsync() 
-        {
-            var formCollection = await Request.ReadFormAsync();
-            var files = formCollection.Files;
-            foreach (var file in files)
-            {
-                var blobContainerClient = new BlobContainerClient("UseDevelopmentStorage=true", "images");
-                blobContainerClient.CreateIfNotExists();
-                var containerClient = blobContainerClient.GetBlobClient(file.FileName);
-                var blobHttpHeader = new BlobHttpHeaders
-                {
-                    ContentType = file.ContentType
-                };
-                await containerClient.UploadAsync(file.OpenReadStream(), blobHttpHeader);
-            }
-
-            return Ok();
-        }
-        
         [HttpPost, DisableRequestSizeLimit]
         [Route("createfile")]
         public async Task<IActionResult> CreateFile([FromForm] DataUser dataUser)
         {
             if (ModelState.IsValid)
             {
-                var tempProfile = dataUser;
+                try
+                {
+                    var tempProfile = dataUser;
+                    BlobServiceClient blobServiceClient = new BlobServiceClient("DefaultEndpointsProtocol=https;AccountName=storagealexchuchko;AccountKey=Udh+PMdPg0F8ZXvtyLzSogNFPSzf/o40WhnG/30QohOaA4pDq5Gay64Px4uA/xq4TMVlHlMaI6kt+AStAmU4HQ==;EndpointSuffix=core.windows.net");
+                    BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient("container1");
+
+                    blobContainerClient.CreateIfNotExists();
+                    var containerClient = blobContainerClient.GetBlobClient(tempProfile.Picture.FileName);
+                    var blobHttpHeader = new BlobHttpHeaders
+                    {
+                        ContentType = tempProfile.Picture.ContentType,
+                    };
+                    await containerClient.UploadAsync(tempProfile.Picture.OpenReadStream(), blobHttpHeader); 
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+               
+
                 return Ok();
             }
 
